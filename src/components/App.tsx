@@ -12,11 +12,12 @@ import Pagination from 'react-bootstrap/Pagination';
 //import interfaces
 import {IPokemon} from "./Interfaces";
 
-const App = () => {
+const App = (): JSX.Element => {
 
     const [pokemons, setPokemons] = useState<Array<IPokemon>>([]);
     const [count, setCount] = useState<number>(0);
     const [offset, setOffSet] = useState<number>(20);
+    const [limit, setLimit] = useState<number>(20);
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(  () => {
@@ -66,13 +67,11 @@ const App = () => {
                                         onClick={() => handlePageChanges(currentPage -1)}
                                         disabled = {currentPage === 1}
                                     />
-                                    {pokemons.map((pokemons, index) =>
-                                        <>
-                                            {(index < 5 ) &&
-                                                <Pagination.Item
-                                                                 active={((index+1) === currentPage )}
-                                                                 onClick={() => handlePageChanges(index+1)}>{index + 1}</Pagination.Item>}
-                                        </>
+                                    {pokemons.slice(0,5).map((pokemons, index) =>
+                                        <Pagination.Item
+                                            key={index}
+                                            active={((index+1) === currentPage )}
+                                            onClick={() => handlePageChanges(index+1)}>{index + 1}</Pagination.Item>
                                     )}
                                     <Pagination.Ellipsis disabled/>
 
