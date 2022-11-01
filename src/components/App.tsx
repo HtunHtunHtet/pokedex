@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from "./Home";
 import Detail from "./Detail";
@@ -9,7 +9,7 @@ const App = (): JSX.Element => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/detail" element={<Detail/>} />
+                <Route path="/detail/:id" element={<Detail/>} />
                 <Route path="*" element={<NoRoute/>} />
             </Routes>
         </BrowserRouter>

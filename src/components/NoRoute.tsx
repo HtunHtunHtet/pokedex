@@ -1,8 +1,8 @@
 import React from 'react';
 
-const NoRoute = (): JSX.Element => {
+const  NoRoute = (): JSX.Element => {
     return(
-       <h1>No Route found</h1>
+       <h1>404 Not Found</h1>
     )
 }
 

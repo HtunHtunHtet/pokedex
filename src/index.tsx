@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(
@@ -10,7 +13,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <Container>
+          <Row>
+              <Col md={{ span: 8, offset: 2 }}>
+                  <App />
+              </Col>
+          </Row>
+      </Container>
   </React.StrictMode>
 );
 
