@@ -44,4 +44,6 @@ export interface IAdditionalFeatures {
 export interface IAddModel {
     isShow: boolean;
     handleModel: Function
+    additionalFeature: Array<IAdditionalFeatures>
+    setAdditionalFeatures: Function
 }

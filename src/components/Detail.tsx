@@ -84,71 +84,83 @@ const Detail = (): JSX.Element => {
                         }
 
                     </Carousel>
-                    <Card.Body>
+                    <Card.Header>
                         <Card.Title className="text-capitalize"><h2>{pokemon.name}</h2></Card.Title>
-                        <ListGroup className="list-group-flush">
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col sm={{ span: 6}}>
-                                        <div><h3>Height</h3> {pokemon.height}</div>
-                                    </Col>
+                    </Card.Header>
+                    <ListGroup className="list-group-flush">
+                        <ListGroup.Item>
+                            <Row>
+                                <Col sm={{ span: 6}}>
+                                    <div><h4>Height</h4> {pokemon.height}</div>
+                                </Col>
 
-                                    <Col sm={{ span: 6}}>
-                                        <div><h3>Weight</h3> {pokemon.weight} kg</div>
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col sm={{ span: 6}}>
-                                        <div>
-                                            <h3>Types</h3>
-                                            {
-                                                (!isLoading) &&  pokemon.types.map((type,index) =>
-                                                    <div key={index} className="text-capitalize">{type.type.name}</div>
-                                                )
-                                            }
-                                        </div>
-                                    </Col>
-                                    <Col sm={{ span: 6}}>
-                                        <div>
-                                            <h3>Abilities</h3>
-                                            {
-                                                (!isLoading) &&  pokemon.abilities.map((ability,index) =>
-                                                    <div key={index} className="text-capitalize">{ability.ability.name}</div>
-                                                )
-                                            }
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col sm={{ span: 12 }}>
-                                        <h3>Stat</h3>
+                                <Col sm={{ span: 6}}>
+                                    <div><h4>Weight</h4> {pokemon.weight} kg</div>
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Row>
+                                <Col sm={{ span: 6}}>
+                                    <div>
+                                        <h4>Types</h4>
                                         {
-                                            (!isLoading) &&  pokemon.stats.map((stat,index) =>
-                                                <div key={index} className="text-capitalize">
-                                                    <strong>{stat.stat.name}</strong> : {stat.base_stat}
-                                                </div>
+                                            (!isLoading) &&  pokemon.types.map((type,index) =>
+                                                <div key={index} className="text-capitalize">{type.type.name}</div>
                                             )
                                         }
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col sm={{ span:12 }} >
-                                        <h3>Additional Features</h3>
+                                    </div>
+                                </Col>
+                                <Col sm={{ span: 6}}>
+                                    <div>
+                                        <h4>Abilities</h4>
+                                        {
+                                            (!isLoading) &&  pokemon.abilities.map((ability,index) =>
+                                                <div key={index} className="text-capitalize">{ability.ability.name}</div>
+                                            )
+                                        }
+                                    </div>
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Row>
+                                <Col sm={{ span: 12 }}>
+                                    <h4>Stat</h4>
+                                    {
+                                        (!isLoading) &&  pokemon.stats.map((stat,index) =>
+                                            <div key={index} className="text-capitalize">
+                                                <strong>{stat.stat.name}</strong> : {stat.base_stat}
+                                            </div>
+                                        )
+                                    }
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Row>
+                                <Col sm={{ span:12 }} >
+                                    <h4>Additional Features </h4>
+                                    <Row>
+                                    {
+                                        additionalFeature.length > 0 &&
+                                        additionalFeature.map((feature,index)  =>
+                                                <Col sm={{ span:12 }} key={index}>
+                                                    <strong>{feature.name}</strong> : {feature.value}
+                                                </Col>
+                                        )
+                                    }
+                                    <Col sm={{ span:12 }}>
                                         <Button variant="primary" onClick={() => handleModel()}>
                                             Add Additional Features
                                         </Button>
                                     </Col>
-                                </Row>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card.Body>
-                    <AddModel isShow={showModel} handleModel={handleModel}/>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                    </ListGroup>
+                    <AddModel isShow={showModel} handleModel={handleModel} setAdditionalFeatures={setAdditionalFeature} additionalFeature={additionalFeature}/>
                 </>
             }
         </Card>
