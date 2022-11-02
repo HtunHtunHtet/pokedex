@@ -10,7 +10,6 @@ import {PokemonDetail, IAdditionalFeatures, IAddPokemon} from "./Interfaces";
 import Loading from "./Loadng";
 import AddModel from "./AddModel";
 import Button from "react-bootstrap/Button";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const Detail = (): JSX.Element => {
 
