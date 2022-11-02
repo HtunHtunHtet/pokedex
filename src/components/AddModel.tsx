@@ -15,7 +15,9 @@ const AddModel = (props: IAddModel): JSX.Element => {
     const {register, handleSubmit, reset} = useForm<IRegister>()
 
     const onSubmit = (data:IRegister) => {
-        props.setAdditionalFeatures([...props.additionalFeature,data])
+        props.setAdditionalFeatures([...props.additionalFeature,data]);
+        //save into local storage
+        localStorage.setItem(`additional-features-${props.id}`,JSON.stringify([...props.additionalFeature,data]));
         props.handleModel();
 
         //clear form

@@ -11,7 +11,8 @@ import Loading from "./Loadng";
 import AddModel from "./AddModel";
 import Button from "react-bootstrap/Button";
 
-export type PokemonDetail ={
+interface PokemonDetail {
+    id: number|null,
     name: string,
     image: string[],
     height: number | null,
@@ -24,6 +25,7 @@ export type PokemonDetail ={
 const Detail = (): JSX.Element => {
 
     const [pokemon, setPokemon] = useState<PokemonDetail>({
+        id: null,
         name: "",
         image: [],
         height: null,
@@ -45,6 +47,7 @@ const Detail = (): JSX.Element => {
 
         getPokemon(id).then(data => {
             setPokemon({
+                id: data.id,
                 name: data.name,
                 image: [
                     data.sprites.other.home.front_default,
@@ -56,6 +59,13 @@ const Detail = (): JSX.Element => {
                 abilities: data.abilities,
                 stats: data.stats
             })
+
+            //check additional feature local storage
+            let additionalFeatureLocalStorage = localStorage.getItem(`additional-features-${id}`)
+
+            if (null !== additionalFeatureLocalStorage) {
+                setAdditionalFeature(JSON.parse(additionalFeatureLocalStorage));
+            }
 
             setIsLoading(!isLoading)
         }, error => alert(error)) // you can put this error message in the bootsrap modal
@@ -160,7 +170,13 @@ const Detail = (): JSX.Element => {
                             </Row>
                         </ListGroup.Item>
                     </ListGroup>
-                    <AddModel isShow={showModel} handleModel={handleModel} setAdditionalFeatures={setAdditionalFeature} additionalFeature={additionalFeature}/>
+                    <AddModel
+                        isShow={showModel}
+                        handleModel={handleModel}
+                        setAdditionalFeatures={setAdditionalFeature}
+                        additionalFeature={additionalFeature}
+                        id={id}
+                    />
                 </>
             }
         </Card>

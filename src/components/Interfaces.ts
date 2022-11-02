@@ -42,6 +42,7 @@ export interface IAdditionalFeatures {
 }
 
 export interface IAddModel {
+    id?:string;
     isShow: boolean;
     handleModel: Function
     additionalFeature: Array<IAdditionalFeatures>
