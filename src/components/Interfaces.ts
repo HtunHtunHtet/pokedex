@@ -1,6 +1,7 @@
 export interface IPokemon {
     name: string,
     url: string,
+    id?: string,
 }
 
 export interface IPokemonTypes {
@@ -33,4 +34,14 @@ export interface IPokemonStats {
 export interface IPokemonStat {
     name: string;
     url: string
+}
+
+export interface IAdditionalFeatures {
+    name: string;
+    value: string;
+}
+
+export interface IAddModel {
+    isShow: boolean;
+    handleModel: Function
 }

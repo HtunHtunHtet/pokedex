@@ -1,6 +1,8 @@
-const root = `https://pokeapi.co/api/v2`;
+import {IPokemon} from "../components/Interfaces";
 
-export function getAllPokemons(offset: number =0 , limit:number = 20) : Promise<any> {
+export const root = `https://pokeapi.co/api/v2`;
+
+export  function getAllPokemons(offset: number =0 , limit:number = 20) {
     return getDataFromURL(`${root}/pokemon/?offset=${offset}&limit=${limit}`)
 }
 

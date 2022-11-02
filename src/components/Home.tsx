@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
+import Loading from "./Loadng";
 
 //import interfaces
 import {IPokemon} from "./Interfaces";
@@ -16,23 +17,17 @@ const Home = (): JSX.Element => {
     const [offset, setOffSet] = useState<number>(20);
     const [limit, setLimit] = useState<number>(20);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(  () => {
         getAllPokemons().then(data => {
             setPokemons(data.results);
             setCount(data.count);
-
-            //get each pokemon from data.result
-            // useEffect(() => {
-            //     pokemon.abilities.map(ability => {
-            //         getDataFromURL(ability.ability.url).then(data => {
-            //             console.log(data)
-            //         })
-            //     })
-            // }, [pokemon.stats]);
-
+            setIsLoading(!isLoading);
         }, error => alert(error))
+
     },[])
+
 
     const handlePageChanges  = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -44,57 +39,69 @@ const Home = (): JSX.Element => {
 
     return (
         <Card>
-            <Card.Header>Pokedex - {count} Pokemons</Card.Header>
-            <Card.Body>
-                <ListGroup variant="flush">
-                    {pokemons.map((pokemon,index) =>
-                        <ListGroup.Item key={index}>
-                            <Row>
-                                <Col sm={{ span: 6}} className="text-capitalize">
-                                    {pokemon.name}
-                                </Col>
-                                <Col sm={{ span: 6 }} className='text-right'>
-                                    <Link to={`/detail/${index + 1}`}>Detail</Link>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                    )}
-                </ListGroup>
-            </Card.Body>
-            <Card.Footer>
-                <Row>
-                    <Col sm={{ span: 8 }}>
-                        <Pagination>
-                            <Pagination.Prev
-                                onClick={() => handlePageChanges(currentPage -1)}
-                                disabled = {currentPage === 1}
-                            />
-                            {pokemons.slice(0,5).map((pokemons, index) =>
-                                <Pagination.Item
-                                    key={index}
-                                    active={((index+1) === currentPage )}
-                                    onClick={() => handlePageChanges(index+1)}>{index + 1}</Pagination.Item>
+            {(isLoading)
+                ? <Loading/>
+                : <>
+                    <Card.Header>Pokedex - {count} Pokemons</Card.Header>
+                    <Card.Body>
+                        <ListGroup variant="flush">
+                            {pokemons.map((pokemon, index) =>
+                            {
+                                let id = (pokemon.url.replace('https://pokeapi.co/api/v2/pokemon/','')).replace('/','');
+
+                                return (
+                                    <ListGroup.Item key={index}>
+                                        <Row>
+                                            <Col sm={{span: 6}} className="text-capitalize">
+                                                 {pokemon.name}
+                                            </Col>
+                                            <Col sm={{span: 6}} className='text-right'>
+                                                <Link to={`/detail/${id}`}>Detail</Link>
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
+                                )
+                            }
+
                             )}
-                            <Pagination.Ellipsis disabled/>
+                        </ListGroup>
+                    </Card.Body>
+                    <Card.Footer>
+                        <Row>
+                            <Col sm={{span: 8}}>
+                                <Pagination>
+                                    <Pagination.Prev
+                                        onClick={() => handlePageChanges(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                    />
+                                    {pokemons.slice(0, 5).map((pokemons, index) =>
+                                        <Pagination.Item
+                                            key={index}
+                                            active={((index + 1) === currentPage)}
+                                            onClick={() => handlePageChanges(index + 1)}>{index + 1}</Pagination.Item>
+                                    )}
+                                    <Pagination.Ellipsis disabled/>
 
-                            {/* Last page */}
-                            <Pagination.Item
-                                active={currentPage === Math.floor(count/offset) }
-                                onClick={() => handlePageChanges( Math.floor(count/offset))}
-                            >{Math.floor(count/offset)}</Pagination.Item>
+                                    {/* Last page */}
+                                    <Pagination.Item
+                                        active={currentPage === Math.floor(count / offset)}
+                                        onClick={() => handlePageChanges(Math.floor(count / offset))}
+                                    >{Math.floor(count / offset)}</Pagination.Item>
 
-                            {/*Next Page*/}
-                            <Pagination.Next
-                                onClick={() =>  handlePageChanges(currentPage + 1)}
-                                disabled = {( currentPage  === Math.floor(count/offset) )}
-                            />
-                        </Pagination>
-                    </Col>
-                    <Col sm={{ span: 4 }} className="text-right">
-                        Current Page - {currentPage}
-                    </Col>
-                </Row>
-            </Card.Footer>
+                                    {/*Next Page*/}
+                                    <Pagination.Next
+                                        onClick={() => handlePageChanges(currentPage + 1)}
+                                        disabled={(currentPage === Math.floor(count / offset))}
+                                    />
+                                </Pagination>
+                            </Col>
+                            <Col sm={{span: 4}} className="text-right">
+                                Current Page - {currentPage}
+                            </Col>
+                        </Row>
+                    </Card.Footer>
+                </>
+            }
         </Card>
     )
 }

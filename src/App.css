@@ -10,3 +10,8 @@
 .carousel-control-next-icon {
     background-image: url('../public/next-carousel.png') !important;
 }
+
+.increase-spinner {
+    width: 10rem !important;
+    height: 10rem !important;
+}
