@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Loading from "./Loadng";
 
 //import interfaces
-import {IPokemon} from "./Interfaces";
+import {IAddPokemon, IPokemon} from "./Interfaces";
 
 const Home = (): JSX.Element => {
     const [pokemons, setPokemons] = useState<Array<IPokemon>>([]);
@@ -18,6 +18,7 @@ const Home = (): JSX.Element => {
     const [limit, setLimit] = useState<number>(20);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [newPokemons, setNewPokemons] = useState<Array<IAddPokemon>>([]);
 
     useEffect(  () => {
         getAllPokemons().then(data => {
@@ -25,6 +26,11 @@ const Home = (): JSX.Element => {
             setCount(data.count);
             setIsLoading(!isLoading);
         }, error => alert(error))
+
+        let newlyAddedPokemon = localStorage.getItem('newPokemons');
+        if (null !== newlyAddedPokemon) {
+            setNewPokemons(JSON.parse(newlyAddedPokemon));
+        }
 
     },[])
 
@@ -42,10 +48,38 @@ const Home = (): JSX.Element => {
             {(isLoading)
                 ? <Loading/>
                 : <>
-                    <Card.Header>Pokedex - {count} Pokemons</Card.Header>
+                    <Card.Header>
+                        <Row>
+                            <Col sm={{span:6}}>
+                                Pokedex - {count} Pokemons
+                            </Col>
+                            <Col sm={{span:6}} className="text-right">
+                                <Link to={`/add-pokemon`}>Add Pokemon</Link>
+                            </Col>
+                        </Row>
+                    </Card.Header>
                     <Card.Body>
                         <ListGroup variant="flush">
-                            {pokemons.map((pokemon, index) =>
+                            <>
+                            {
+                                newPokemons.map((pokemon, index) => {
+                                    return (
+                                        <ListGroup.Item key={index}>
+                                            <Row>
+                                                <Col sm={{span: 6}} className="text-capitalize">
+                                                    {pokemon.name}
+                                                </Col>
+                                                <Col sm={{span: 6}} className='text-right'>
+                                                    <Link to={`/detail/${pokemon.id}`}>Detail</Link>
+                                                </Col>
+                                            </Row>
+                                        </ListGroup.Item>
+                                    )
+                                })
+                            }
+
+                            {
+                                pokemons.map((pokemon, index) =>
                             {
                                 let id = (pokemon.url.replace('https://pokeapi.co/api/v2/pokemon/','')).replace('/','');
 
@@ -62,8 +96,8 @@ const Home = (): JSX.Element => {
                                     </ListGroup.Item>
                                 )
                             }
-
                             )}
+                            </>
                         </ListGroup>
                     </Card.Body>
                     <Card.Footer>

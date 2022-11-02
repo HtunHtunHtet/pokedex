@@ -6,21 +6,11 @@ import Col from 'react-bootstrap/Col';
 import Carousel from 'react-bootstrap/Carousel';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import {IAdditionalFeatures, IPokemonAbilities, IPokemonStats, IPokemonTypes} from "./Interfaces";
+import {PokemonDetail, IAdditionalFeatures, IAddPokemon} from "./Interfaces";
 import Loading from "./Loadng";
 import AddModel from "./AddModel";
 import Button from "react-bootstrap/Button";
-
-interface PokemonDetail {
-    id: number|null,
-    name: string,
-    image: string[],
-    height: number | null,
-    weight?: number | null,
-    types: Array<IPokemonTypes>
-    abilities: Array<IPokemonAbilities>
-    stats: Array<IPokemonStats>
-}
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const Detail = (): JSX.Element => {
 
@@ -42,6 +32,52 @@ const Detail = (): JSX.Element => {
     useEffect(  () => {
         if (undefined === id) {
             alert ('Missing id');
+            return;
+        }
+
+        //check in localStorage
+        let newPokemons = localStorage.getItem('newPokemons');
+        let isNewPokemon = id.includes('newPokemon');
+        if (null !== newPokemons && isNewPokemon) {
+            let pokemons: Array<IAddPokemon> = JSON.parse(newPokemons);
+
+            pokemons.map((pokemon) => {
+                if(pokemon.id === id) {
+                    setPokemon({
+                        id: parseInt(pokemon.id),
+                        name: pokemon.name,
+                        image: [],
+                        height: pokemon.height,
+                        weight: pokemon.weight,
+                        types: [
+                            {
+                                slot: '100',
+                                type: {
+                                    name: pokemon.type,
+                                    url: 'www.google.com'
+                                }
+                            }
+                        ],
+                        abilities: [
+                            {
+                                is_hidden: false,
+                                slot: 1000,
+                                ability: {
+                                    url: 'www.example.com',
+                                    name: pokemon.ability
+                                }
+                            }
+                        ],
+                        stats: [],
+                    })
+                }
+            })
+            //check additional feature local storage
+            let additionalFeatureLocalStorage = localStorage.getItem(`additional-features-${id}`)
+            if (null !== additionalFeatureLocalStorage) {
+                setAdditionalFeature(JSON.parse(additionalFeatureLocalStorage));
+            }
+            setIsLoading(!isLoading);
             return;
         }
 
@@ -68,7 +104,8 @@ const Detail = (): JSX.Element => {
             }
 
             setIsLoading(!isLoading)
-        }, error => alert(error)) // you can put this error message in the bootsrap modal
+            // you can put this error message in the bootsrap modal
+        }, error => alert(error))
     },[])
 
     const handleModel = () => setShowModel(!showModel)
@@ -80,20 +117,23 @@ const Detail = (): JSX.Element => {
                 ? <Loading/>
                 :
                 <>
-                    <Carousel>
-                        {
-                            ((!isLoading) && pokemon.image.map((image, index) => (
-                                <Carousel.Item key={index}>
-                                    <img
-                                        className="rounded mx-auto d-block"
-                                        src={`${image}`}
-                                        alt={`pokemon-image-${index}`}
-                                    />
-                                </Carousel.Item>
-                            )))
-                        }
+                    {
+                        (pokemon.image.length > 0) &&
+                        <Carousel>
+                            {
+                                (pokemon.image.map((image, index) => (
+                                    <Carousel.Item key={index}>
+                                        <img
+                                            className="rounded mx-auto d-block"
+                                            src={`${image}`}
+                                            alt={`pokemon-image-${index}`}
+                                        />
+                                    </Carousel.Item>
+                                )))
+                            }
 
-                    </Carousel>
+                        </Carousel>
+                    }
                     <Card.Header>
                         <Card.Title className="text-capitalize"><h2>{pokemon.name}</h2></Card.Title>
                     </Card.Header>
