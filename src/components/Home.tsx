@@ -7,6 +7,8 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import Loading from "./Loadng";
+import Badge from 'react-bootstrap/Badge';
+
 
 //import interfaces
 import {IAddPokemon, IPokemon} from "./Interfaces";
@@ -15,7 +17,6 @@ const Home = (): JSX.Element => {
     const [pokemons, setPokemons] = useState<Array<IPokemon>>([]);
     const [count, setCount] = useState<number>(0);
     const [offset, setOffSet] = useState<number>(20);
-    const [limit, setLimit] = useState<number>(20);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [newPokemons, setNewPokemons] = useState<Array<IAddPokemon>>([]);
@@ -67,7 +68,7 @@ const Home = (): JSX.Element => {
                                         <ListGroup.Item key={index}>
                                             <Row>
                                                 <Col sm={{span: 6}} className="text-capitalize">
-                                                    {pokemon.name}
+                                                    {pokemon.name} <Badge bg="success">New</Badge>
                                                 </Col>
                                                 <Col sm={{span: 6}} className='text-right'>
                                                     <Link to={`/detail/${pokemon.id}`}>Detail</Link>
