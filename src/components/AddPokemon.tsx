@@ -5,8 +5,6 @@ import {useForm} from "react-hook-form";
 import Button from 'react-bootstrap/Button';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Tooltip from "react-bootstrap/Tooltip";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import BackToHome from "./BackToHome";
 
 const AddPokemon = (): JSX.Element => {
