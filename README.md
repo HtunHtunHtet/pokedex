@@ -2,7 +2,7 @@
 1. clone this repo 
 2. Change directory to `bash cd pokedex`.
 3. Install package via npm , `npm i`
-4. Start the application by using `npm run start`, the application will open in your browser.
+4. Start the application by using `npm run start`, the application will open in your browser, ideally at `http://localhost:3000`.
 
 # Features 
 ### 1. List Pokemons
