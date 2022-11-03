@@ -3,6 +3,11 @@ import Card from 'react-bootstrap/Card';
 import Form from "react-bootstrap/Form";
 import {useForm} from "react-hook-form";
 import Button from 'react-bootstrap/Button';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import BackToHome from "./BackToHome";
 
 const AddPokemon = (): JSX.Element => {
 
@@ -26,7 +31,11 @@ const AddPokemon = (): JSX.Element => {
     return (
         <Card>
             <Card.Header>
-                Add Pokemons
+                <Row>
+                    <Col sm={{span: 12}}>
+                        <BackToHome/> Add Pokemons
+                    </Col>
+                </Row>
             </Card.Header>
             <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>

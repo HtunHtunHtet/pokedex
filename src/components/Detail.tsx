@@ -10,6 +10,9 @@ import {PokemonDetail, IAdditionalFeatures, IAddPokemon} from "./Interfaces";
 import Loading from "./Loadng";
 import AddModel from "./AddModel";
 import Button from "react-bootstrap/Button";
+import BackToHome from "./BackToHome";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 const Detail = (): JSX.Element => {
 
@@ -116,6 +119,11 @@ const Detail = (): JSX.Element => {
                 ? <Loading/>
                 :
                 <>
+                    <Card.Header>
+                        <Card.Title className="text-capitalize">
+                            <BackToHome /> {pokemon.name}
+                        </Card.Title>
+                    </Card.Header>
                     {
                         (pokemon.image.length > 0) &&
                         <Carousel>
@@ -133,9 +141,6 @@ const Detail = (): JSX.Element => {
 
                         </Carousel>
                     }
-                    <Card.Header>
-                        <Card.Title className="text-capitalize"><h2>{pokemon.name}</h2></Card.Title>
-                    </Card.Header>
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>
                             <Row>
@@ -188,8 +193,24 @@ const Detail = (): JSX.Element => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Row>
+                                <Col sm={{ span: 12}}>
+                                    <h4>
+                                        <span>Additional Features</span>
+                                        <OverlayTrigger
+                                            placement='right'
+                                            overlay={
+                                                <Tooltip id={`tooltip`}>
+                                                    Add Features
+                                                </Tooltip>
+                                            }
+                                        >
+                                            <Button  className='m-2' variant="primary" onClick={() => handleModel()}>
+                                                <i className="fa fa-plus"></i>
+                                            </Button>
+                                        </OverlayTrigger>
+                                    </h4>
+                                </Col>
                                 <Col sm={{ span:12 }} >
-                                    <h4>Additional Features </h4>
                                     <Row>
                                     {
                                         additionalFeature.length > 0 &&
@@ -199,11 +220,7 @@ const Detail = (): JSX.Element => {
                                                 </Col>
                                         )
                                     }
-                                    <Col sm={{ span:12 }}>
-                                        <Button variant="primary" onClick={() => handleModel()}>
-                                            Add Additional Features
-                                        </Button>
-                                    </Col>
+
                                     </Row>
                                 </Col>
                             </Row>

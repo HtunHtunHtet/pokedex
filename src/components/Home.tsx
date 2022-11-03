@@ -8,7 +8,9 @@ import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import Loading from "./Loadng";
 import Badge from 'react-bootstrap/Badge';
-
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 //import interfaces
 import {IAddPokemon, IPokemon} from "./Interfaces";
@@ -55,7 +57,19 @@ const Home = (): JSX.Element => {
                                 Pokedex - {count} Pokemons
                             </Col>
                             <Col sm={{span:6}} className="text-right">
-                                <Link to={`/add-pokemon`}>Add Pokemon</Link>
+                                <OverlayTrigger
+                                    placement='right'
+                                    overlay={
+                                        <Tooltip id={`tooltip`}>
+                                            Add Pokemon
+                                        </Tooltip>
+                                    }
+                                >
+                                    <Button href={'/add-pokemon'}>
+                                    <i className="fa fa-plus"></i>
+                                </Button>
+                                </OverlayTrigger>
+
                             </Col>
                         </Row>
                     </Card.Header>
