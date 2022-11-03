@@ -113,7 +113,7 @@ const Detail = (): JSX.Element => {
     const handleModel = () => setShowModel(!showModel)
 
     return(
-        <Card>
+        <Card className="mt-3 mb-3">
             {
                 (isLoading)
                 ? <Loading/>

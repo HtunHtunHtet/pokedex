@@ -27,7 +27,7 @@ const AddPokemon = (): JSX.Element => {
     }
 
     return (
-        <Card>
+        <Card className="mt-3 mb-3">
             <Card.Header>
                 <Row>
                     <Col sm={{span: 12}}>

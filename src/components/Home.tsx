@@ -47,7 +47,7 @@ const Home = (): JSX.Element => {
     }
 
     return (
-        <Card>
+        <Card className="mt-3 mb-3">
             {(isLoading)
                 ? <Loading/>
                 : <>
