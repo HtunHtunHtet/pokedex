@@ -1,5 +1,3 @@
-import {IPokemon} from "../components/Interfaces";
-
 export const root = `https://pokeapi.co/api/v2`;
 
 export  function getAllPokemons(offset: number =0 , limit:number = 20) {
